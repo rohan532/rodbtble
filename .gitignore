@@ -1,0 +1,19 @@
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'excelHtml5',
+            customize: function(xlsx) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+ 
+                // Loop over the cells in column `F`
+                $('row c[r^="F"]', sheet).each( function () {
+                    // Get the value and strip the non numeric characters
+                    if ( $('is t', this).text().replace(/[^\d]/g, '') * 1 >= 500000 ) {
+                        $(this).attr( 's', '20' );
+                    }
+                });
+            }
+        }]
+    });
+});
